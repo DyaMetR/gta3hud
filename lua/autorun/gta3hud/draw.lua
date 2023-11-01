@@ -309,8 +309,9 @@ function FONT:GetTextSize(text, spacing, _w, _h)
   for i=1, len do
     local char = utf8.GetChar(text, i)
     if not self:Exists(char) then
-      if not self:Exists(UNKNOWN) then continue end
-      char = UNKNOWN
+      --[[ if not self:Exists(UNKNOWN) then continue end
+      char = UNKNOWN]]
+      continue -- FIXME: investigate the leading invalid characters on localized strings
     end
     table.insert(charstring, char)
     local glyph = self.glyphs[char]
