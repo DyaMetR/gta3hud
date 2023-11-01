@@ -1,0 +1,16 @@
+{
+	"title"	:	"Grand Theft Auto 3D Universe HUD",
+	"type"	:	"effects",
+	"tags"	:	[ "fun", "movie" ],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*",
+		"*.git*",
+		"LICENSE",
+		"README.md",
+		"DOCUMENTATION.md",
+		"CONTRIBUTING.md"
+	]
+}
