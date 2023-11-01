@@ -4,6 +4,8 @@
 
 if engine.ActiveGamemode() ~= 'terrortown' then return end
 
+local HOOK = GTA3HUD.hookname .. '_ttt'
+
 if SERVER then
 
   -- [[ Disable wanted system entirely ]] --
@@ -11,8 +13,6 @@ if SERVER then
 
   return
 end
-
-local HOOK = GTA3HUD.hookname .. '_ttt'
 
 local ROLE_COLOURS = {
   none      = Color(140, 138, 134),
