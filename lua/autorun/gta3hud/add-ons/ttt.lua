@@ -2,9 +2,15 @@
   Support for Trouble in Terrorist Town.
 ]]--------------------------------------------------------------------
 
-if SERVER then return end
-
 if engine.ActiveGamemode() ~= 'terrortown' then return end
+
+if SERVER then
+
+  -- [[ Disable wanted system entirely ]] --
+  hook.Add('GTA3HUD_OnWantedLevelSet', HOOK, function() return false end)
+
+  return
+end
 
 local HOOK = GTA3HUD.hookname .. '_ttt'
 
@@ -51,9 +57,6 @@ end)
 hook.Add('GTA3HUD_GetMoney', HOOK, function()
   return LocalPlayer():GetBaseKarma()
 end)
-
--- [[ Disable wanted system entirely ]] --
-hook.Add('GTA3HUD_OnWantedLevelSet', HOOK, function() return false end)
 
 -- [[ Add statistics ]] --
 local role = GTA3HUD.stats.CreateTextStat(nil, 'unknown')
