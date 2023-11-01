@@ -1,7 +1,7 @@
 
 if SERVER then return end
 
-local URL_STEAMWORKSHOP = 'https://steamcommunity.com/sharedfiles/filedetails/?id=3056364452'
+local URL_STEAMWORKSHOP = 'https://steamcommunity.com/sharedfiles/filedetails/?id=3068556242'
 local URL_GITHUB = 'https://github.com/DyaMetR/gta3hud'
 
 local MIN_W, MIN_H = 640, 480

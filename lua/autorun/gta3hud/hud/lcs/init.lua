@@ -103,7 +103,7 @@ end
 
 local HUD_WASTED = HUD:Element('wasted', '#gta3hud.menu.lcs.wasted', Color(150, 0, 0), 0, 0)
 HUD_WASTED:Parameter('camera', '#gta3hud.menu.common.wasted.camera', true)
-HUD_WASTED:Parameter('label', '#gta3hud.menu.common.wasted.label', '#gta3hud.menu.lcs.wasted.default')
+HUD_WASTED:Parameter('label', '#gta3hud.menu.common.wasted.label', language.GetPhrase('gta3hud.menu.lcs.wasted.default'))
 HUD_WASTED.Preview = function(self, w, h, settings)
 	local x, y = w * .5, (h * .5) + 40
 	GTA3HUD.LCS.DrawWasted(settings.wasted.label, x, y, settings.wasted.colour)

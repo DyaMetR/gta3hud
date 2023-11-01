@@ -156,7 +156,6 @@ function GTA3HUD.LCS.DrawWasted(label, x, y, colour, alpha, scale)
 	scale = scale or 1
 	alpha = alpha or 1
 	scale = scale * 2
-	label = language.GetPhrase(label)
 	surface.SetAlphaMultiplier(alpha)
 	GTA3HUD.LCS.BIGTEXT:DrawText(label, x + 2 * scale, y + 2 * scale, color_black, 1, scale, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 	GTA3HUD.LCS.BIGTEXT:DrawText(label, x, y, colour, 1, scale, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)

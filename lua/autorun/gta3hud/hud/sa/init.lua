@@ -98,7 +98,7 @@ end
 local preview = 0
 local HUD_MONEY = HUD:Element('money', '#gta3hud.menu.common.money', Color(70, 120, 50), 0, 95)
 HUD_MONEY:Parameter('animation', '#gta3hud.menu.common.money.animation', true)
-HUD_MONEY:Option('source', '#gta3hud.menu.common.money.source', GTA3HUD.money.MODES, 1)
+HUD_MONEY:Option('source', '#gta3hud.menu.common.money.modes', GTA3HUD.money.MODES, 1)
 HUD_MONEY:Parameter('multiplier', '#gta3hud.menu.common.money.multiplier', 1)
 HUD_MONEY:Parameter('input', '#gta3hud.menu.common.money.input', 0)
 HUD_MONEY.Preview = function(self, w, h, settings)
@@ -122,7 +122,7 @@ end
 
 local HUD_WASTED = HUD:Element('wasted', '#gta3hud.menu.sa.wasted', Color(215, 215, 215), 0, 64)
 HUD_WASTED:Parameter('camera', '#gta3hud.menu.common.wasted.camera', true)
-HUD_WASTED:Parameter('label', '#gta3hud.menu.common.wasted.label', '#gta3hud.menu.sa.wasted.default')
+HUD_WASTED:Parameter('label', '#gta3hud.menu.common.wasted.label', language.GetPhrase('gta3hud.menu.sa.wasted.default'))
 HUD_WASTED.Preview = function(self, w, h, settings)
 	local x, y = w * .5, (h * .5) + 60
 	GTA3HUD.SA.DrawWasted(settings.wasted.label, x, y, settings.wasted.colour, 1, 1, true)
@@ -131,8 +131,8 @@ end
 local HUD_MINIMAP = HUD:Element('minimap', '#gta3hud.menu.common.radar', Color(0, 0, 0), 52, 34)
 HUD_MINIMAP:Parameter('radius', '#gta3hud.menu.common.radar.radius', 110)
 HUD_MINIMAP:Parameter('background', '#gta3hud.menu.common.radar.minimap', true)
-HUD_MINIMAP:Parameter('friend', '#gta3hud.menu.sa.radar.friends', Color(26, 236, 26))
-HUD_MINIMAP:Parameter('hostile', '#gta3hud.menu.sa.radar.hostiles', Color(236, 16, 16))
+HUD_MINIMAP:Parameter('friend', '#gta3hud.menu.sa.radar.friend', Color(26, 236, 26))
+HUD_MINIMAP:Parameter('hostile', '#gta3hud.menu.sa.radar.hostile', Color(236, 16, 16))
 HUD_MINIMAP:Parameter('entities', '#gta3hud.menu.common.radar.entities', Color(16, 200, 255))
 HUD_MINIMAP:Parameter('position', '#gta3hud.menu.common.radar.position', Color(220, 220, 60))
 HUD_MINIMAP.Preview = function(self, w, h, settings)

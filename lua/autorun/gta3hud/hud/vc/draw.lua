@@ -289,7 +289,6 @@ function GTA3HUD.VC.DrawWasted(label, x, y, colour, shadowPos, shadowCol, alpha,
 	alpha = alpha or 1
 	scale = (scale or 1) * 2
 	align = align or TEXT_ALIGN_RIGHT
-	label = language.GetPhrase(label)
 	local atlas
 	if outline then atlas = ATLAS1_OUTLINED end
 	surface.SetAlphaMultiplier(alpha)

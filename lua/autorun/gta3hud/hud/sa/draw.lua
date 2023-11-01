@@ -162,7 +162,7 @@ function GTA3HUD.SA.DrawWasted(label, x, y, colour, alpha, scale, preview)
 	local font = FONT3
 	if preview then font = FONT3_PREVIEW end
 	surface.SetAlphaMultiplier(alpha)
-	draw.SimpleTextOutlined(language.GetPhrase(label), font, x, y, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, scale * 4, color_black)
+	draw.SimpleTextOutlined(label, font, x, y, colour, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM, scale * 4, color_black)
 	surface.SetAlphaMultiplier(1)
 end
 

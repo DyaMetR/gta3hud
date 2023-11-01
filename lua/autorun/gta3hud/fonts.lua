@@ -33,6 +33,7 @@ end
   @param {number} scale
 ]]--------------------------------------------------------------------
 function GTA3HUD.fonts.Generate(scale)
+	scale = tonumber(scale) or 0
   for name, font in pairs(fonts) do
     surface.CreateFont(string.format(FONT_FORMAT, name), {
       font = font.font,

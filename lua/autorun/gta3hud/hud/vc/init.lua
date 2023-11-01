@@ -54,7 +54,7 @@ end
 local preview = 0
 local HUD_MONEY = HUD:Element('money', '#gta3hud.menu.common.money', Color(0, 210, 133), 103, 23)
 HUD_MONEY:Parameter('animation', '#gta3hud.menu.common.money.animation', true)
-HUD_MONEY:Option('source', '#gta3hud.menu.common.money.source', GTA3HUD.money.MODES, 1)
+HUD_MONEY:Option('source', '#gta3hud.menu.common.money.modes', GTA3HUD.money.MODES, 1)
 HUD_MONEY:Parameter('multiplier', '#gta3hud.menu.common.money.multiplier', 1)
 HUD_MONEY:Parameter('input', '#gta3hud.menu.common.money.input', 0)
 HUD_MONEY.Preview = function(self, w, h, settings)
@@ -133,7 +133,7 @@ end
 
 local HUD_WASTED = HUD:Element('wasted', '#gta3hud.menu.vc.wasted', Color(100, 190, 250), 47, 76)
 HUD_WASTED:Parameter('camera', '#gta3hud.menu.gta3.wasted.camera', true)
-HUD_WASTED:Parameter('label', 'Label', '#gta3hud.menu.vc.wasted.default')
+HUD_WASTED:Parameter('label', 'Label', language.GetPhrase('gta3hud.menu.vc.wasted.default'))
 HUD_WASTED.Preview = function(self, w, h, settings)
 	local x, y = (w * .5), (h * .5) + 27
 	GTA3HUD.VC.DrawWasted(settings.wasted.label, x, y, settings.wasted.colour, settings.shadowPos, settings.shadowCol, 1, 1, TEXT_ALIGN_CENTER, settings.outline)
