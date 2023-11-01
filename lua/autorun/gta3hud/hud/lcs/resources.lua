@@ -13,11 +13,12 @@ HUD_ATLAS:Cursor(0, 0, 32, 34):Bulk({
   '0', '1', '2', '3', '4', '5', '6', '7',
   '8', '9', ':', '$', 'star'
 }, nil, 32)
+HUD_ATLAS:Add('-', 0, 68, 32, 34)
 GTA3HUD.LCS.HUDATLAS = HUD_ATLAS
 
 -- create font
 local HUDNUMBERS = HUD_ATLAS:Font()
-HUDNUMBERS:Bulk({'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '$'}, 26)
+HUDNUMBERS:Bulk({'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '$', '-'}, 26)
 HUDNUMBERS:Add(':', 18)
 GTA3HUD.LCS.HUDNUMBERS = HUDNUMBERS
 

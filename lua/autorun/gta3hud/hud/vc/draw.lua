@@ -14,6 +14,7 @@ local PRICEDOWN = GTA3HUD.VC.PRICEDOWN
 local TIME_FORMAT = '%02d'
 local HEALTH_FORMAT = '%03d'
 local MONEY_FORMAT = '$%08d'
+local NEGATIVE_MONEY_FORMAT = '$%07d'
 
 -- weapon panel
 local WEAPON_FRAME = Material('gta3hud/vc/weapon.png')
@@ -74,9 +75,16 @@ end
   @return {number} height
 ]]--------------------------------------------------------------------
 function GTA3HUD.VC.DrawMoney(money, x, y, colour, scale, outline)
+	local format = MONEY_FORMAT
+	if money < 0 then
+		money = math.abs(money)
+		format = NEGATIVE_MONEY_FORMAT
+		if outline then draw.RoundedBox(0, x - 166 * scale, y + 20 * scale, 14 * scale, 8 * scale, color_black) end
+		draw.RoundedBox(0, x - 165 * scale, y + 19 * scale, 12 * scale, 6 * scale, colour)
+	end
 	local atlas
 	if outline then atlas = ATLAS1_OUTLINED end
-  return PRICEDOWN:DrawText(string.format(MONEY_FORMAT, money), x, y, colour, 1, scale or 1, TEXT_ALIGN_RIGHT, nil, nil, nil, atlas)
+  return PRICEDOWN:DrawText(string.format(format, money), x, y, colour, 1, scale or 1, TEXT_ALIGN_RIGHT, nil, nil, nil, atlas)
 end
 
 --[[------------------------------------------------------------------

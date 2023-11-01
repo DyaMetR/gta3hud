@@ -31,7 +31,7 @@ GTA3HUD.GTA3.ATLAS1_OUTLINED = ATLAS1_OUTLINED -- export atlas
 local FONT1 = ATLAS1:Font()
 GTA3HUD.GTA3.FONT1 = FONT1 -- export font
 FONT1:Bulk({
-  ' ', '!', '¡', ',', '-', '.', 'º', 'i', 'ì', 'í', 'î', 'ï'
+  ' ', '!', '¡', ',', '.', 'º', 'i', 'ì', 'í', 'î', 'ï'
 }, 8)
 FONT1:Bulk({
   '$', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?',
@@ -46,7 +46,7 @@ FONT1:Bulk({
   'Ç', 'È', 'É', 'Ê', 'Ë', 'Ò', 'Ó', 'Ô', 'Ù', 'Ú', 'Û', 'Ü'
 }, 22)
 FONT1:Bulk({'m', 'æ'}, 28)
-FONT1:Bulk({'I', 'Ì', 'Í', 'Î', 'Ï', '(', ')'}, 13)
+FONT1:Bulk({'I', 'Ì', 'Í', 'Î', 'Ï', '(', ')', '-'}, 13)
 FONT1:Bulk({'W', 'Æ'}, 32)
 FONT1:Bulk({'&', 't'}, 20)
 FONT1:Bulk({'w', 'M'}, 31)

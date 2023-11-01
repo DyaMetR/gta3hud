@@ -10,6 +10,7 @@ local FONT2 = GTA3HUD.GTA3.FONT2 -- import Font 2
 local TIME_FORMAT = '%02d'
 local HEALTH_FORMAT = '%03d'
 local MONEY_FORMAT = '$%08d'
+local NEGATIVE_MONEY_FORMAT = '-$%07d'
 
 local WEAPON_FRAME_WIDTH, WEAPON_FRAME_HEIGHT = 86, 90
 local FRAME_MARGIN, AMMO_PANEL_HEIGHT, AMMO_FORMAT = 2, 18, '%s-%s'
@@ -53,9 +54,14 @@ end
   @return {number} height
 ]]--------------------------------------------------------------------
 function GTA3HUD.GTA3.DrawMoney(money, x, y, colour, scale, outline)
+	local format = MONEY_FORMAT
+	if money < 0 then
+		money = math.abs(money)
+		format = NEGATIVE_MONEY_FORMAT
+	end
 	local atlas
 	if outline then atlas = ATLAS1_OUTLINED end
-  return FONT1:DrawText(string.format(MONEY_FORMAT, money), x, y, colour, 1, scale or 1, TEXT_ALIGN_RIGHT, nil, nil, nil, atlas)
+  return FONT1:DrawText(string.format(format, money), x, y, colour, 1, scale or 1, TEXT_ALIGN_RIGHT, nil, nil, nil, atlas)
 end
 
 --[[------------------------------------------------------------------
@@ -159,8 +165,8 @@ function GTA3HUD.GTA3.DrawWeapon(weapon, database, x, y, colour, ammoColour, sca
 	if reserve then ammo = string.format(AMMO_FORMAT, reserve, clip) end
 	FONT2:DrawText(ammo, x + w * .5, y + 66 * scale, ammoColour, 0, scale / 4, TEXT_ALIGN_CENTER, nil, 4, -1)
 	if not secondary then return end
-	FONT2:DrawText(alt, x + 14 * scale, y + 8 * scale, color_black, 0, scale / 4, TEXT_ALIGN_CENTER, nil, 4, -1)
-	FONT2:DrawText(alt, x + 12 * scale, y + 6 * scale, colour, 0, scale / 4, TEXT_ALIGN_CENTER, nil, 4, -1)
+	FONT2:DrawText(alt, x + 8 * scale, y + 8 * scale, color_black, 0, scale / 4, nil, nil, 4, -1)
+	FONT2:DrawText(alt, x + 6 * scale, y + 6 * scale, colour, 0, scale / 4, nil, nil, 4, -1)
 end
 
 --[[------------------------------------------------------------------

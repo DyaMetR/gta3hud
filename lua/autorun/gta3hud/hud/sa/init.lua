@@ -208,7 +208,6 @@ function HUD:Draw(settings, scale)
 
 	-- draw
 	local weapon = LocalPlayer():GetActiveWeapon()
-	if settings.weapon.visible then GTA3HUD.SA.DrawWeapon(weapon, GTA3HUD.SA.WEAPONS, x - settings.weapon.x * scale, y + settings.weapon.y * scale, settings.weapon.colour, settings.weapon.iconCol, settings.weapon.ammoCol, scale) end
 	if settings.time.visible then GTA3HUD.SA.DrawTime(hours, minutes, x - settings.time.x * scale, y + settings.time.y * scale, settings.time.colour, scale) end
 	if settings.armour.visible and armour > 0 then GTA3HUD.SA.DrawBar(armour, x - settings.armour.x * scale, y + settings.armour.y * scale, BAR_WIDTH * scale, BAR_HEIGHT * scale, settings.armour.colour, scale) end
 	if settings.auxpow.visible and auxpow < 1 then GTA3HUD.SA.DrawBar(auxpow, x - settings.auxpow.x * scale, y + settings.auxpow.y * scale, BAR_WIDTH * scale, BAR_HEIGHT * scale, settings.auxpow.colour, scale) end
@@ -219,6 +218,7 @@ function HUD:Draw(settings, scale)
 	if settings.money.visible then GTA3HUD.SA.DrawMoney(money, x - settings.money.x * scale, y + settings.money.y * scale, settings.money.colour, scale) end
 	if settings.stars.visible and stars > 0 and not BLINK_STARS:IsBlinking() then GTA3HUD.SA.DrawStars(stars, x - settings.stars.x * scale, y + settings.stars.y * scale, settings.stars.colour, settings.stars.opacity, scale) end
 	if settings.stats.visible then GTA3HUD.SA.DrawStats(x - settings.stats.x * scale, y + settings.stats.y * scale, settings.stats.colour, settings.stats.altCol, scale) end
+	if settings.weapon.visible then GTA3HUD.SA.DrawWeapon(weapon, GTA3HUD.SA.WEAPONS, x - settings.weapon.x * scale, y + settings.weapon.y * scale, settings.weapon.colour, settings.weapon.iconCol, settings.weapon.ammoCol, scale) end
 
 	-- wasted
 	if settings.wasted.visible and GTA3HUD.util.IsWasted() then

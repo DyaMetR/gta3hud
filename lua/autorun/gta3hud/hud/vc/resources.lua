@@ -44,7 +44,7 @@ GTA3HUD.VC.ATLAS1_OUTLINED = ATLAS1_OUTLINED -- export atlas
 -- create arborcrest font
 local ARBORCREST = ATLAS1:Font()
 ARBORCREST:Bulk({
-  '!', '\'', '(', ')', ',', '.', ':', ';', '¡', 'º', '`', 'I', 'i', 'j', 'l', '|'
+  '!', '\'', ')', ',', '.', ':', ';', '¡', 'º', '`', 'I', 'i', 'j', 'l', '|'
 }, 5)
 ARBORCREST:Bulk({
   '$', '%', '&', '*', '+', '/',
@@ -60,6 +60,7 @@ ARBORCREST:Bulk({
   'à', 'á', 'â', 'ä', 'ç', 'è', 'é', 'ê',
   'ë', 'ì', 'í', 'î', 'ï', 'ò', 'ó', 'ö', 'ô', 'ù', 'ú', 'û', 'ü', 'ñ'
 }, 16)
+ARBORCREST:Add('(', 7)
 ARBORCREST:Bulk({'f', 't', 'r', '-'}, 13)
 ARBORCREST:Bulk({'m', 'w'}, 23)
 ARBORCREST:Bulk({'M', 'Æ', 'æ'}, 25)

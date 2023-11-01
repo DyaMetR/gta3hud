@@ -8,6 +8,7 @@ local HUDATLAS = GTA3HUD.LCS.HUDATLAS -- import HUD numbers atlas
 
 local TIME_FORMAT = '%02d:%02d'
 local MONEY_FORMAT = '$%08d'
+local NEGATIVE_MONEY_FORMAT = '-$%07d'
 
 local WEAPON_FRAME = Material('gta3hud/lcs/weapon.png')
 local WEAPON_FRAME_WIDTH, WEAPON_FRAME_HEIGHT = 128, 128
@@ -124,7 +125,12 @@ end
   @param {number} scale
 ]]--------------------------------------------------------------------
 function GTA3HUD.LCS.DrawMoney(money, x, y, colour, scale)
-	return HUDNUMBERS:DrawText(string.format(MONEY_FORMAT, money), x, y, colour, 4, scale, TEXT_ALIGN_RIGHT, nil, -7.25, -1)
+	local format = MONEY_FORMAT
+	if money < 0 then
+		money = math.abs(money)
+		format = NEGATIVE_MONEY_FORMAT
+	end
+	return HUDNUMBERS:DrawText(string.format(format, money), x, y, colour, 4, scale, TEXT_ALIGN_RIGHT, nil, -7.25, -1)
 end
 
 --[[------------------------------------------------------------------

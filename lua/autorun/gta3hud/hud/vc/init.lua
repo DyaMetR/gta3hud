@@ -238,13 +238,6 @@ function HUD:Draw(settings, scale)
 	if settings.health.visible and settings.health.move then armour_xpos = armour_xpos - health_wide * math.max(math.log10(health) - 2, 0) end
 	local stars_xpos, stars_ypos = x - settings.stars.x * scale, y + settings.stars.y * scale
 
-	-- weapon
-	if settings.weapon.visible then
-		local weapon = LocalPlayer():GetActiveWeapon()
-		local database = GTA3HUD.VC.WEAPONS
-		GTA3HUD.VC.DrawWeapon(weapon, database:Get(database:FindWeaponIcon(weapon)), self:WeaponTypeColour(settings, database:FindWeaponType(weapon) or GTA3HUD.VC.GetWeaponType(weapon)), x - settings.weapon.x * scale, y + settings.weapon.y * scale, settings.weapon.colour, settings.weapon.ammoCol, settings.shadowPos, settings.shadowCol, scale, settings.outline)
-	end
-
   -- shadow
 	if not settings.outline then
 		if settings.time.visible then GTA3HUD.VC.DrawTime(hours, minutes, time_xpos + shadow, time_ypos + shadow, settings.shadowCol, scale) end
@@ -261,6 +254,13 @@ function HUD:Draw(settings, scale)
 	if settings.stars.visible and not BLINK_STARS:IsBlinking() then GTA3HUD.VC.DrawStars(stars, stars_xpos, stars_ypos, settings.stars.colour, settings.stars.background, settings.shadowPos, settings.shadowCol, scale, BLINK_STARS:IsBlinking(), settings.outline) end
 	 -- TODO: use own, or at least pass the VC's atlas
 	if settings.stats.visible then GTA3HUD.GTA3.DrawStats(x - settings.stats.x * scale, y + settings.stats.y * scale, settings.stats.colour, settings.stats.colour, settings.shadowPos, settings.shadowCol, scale, settings.outline) end
+
+	-- weapon
+	if settings.weapon.visible then
+		local weapon = LocalPlayer():GetActiveWeapon()
+		local database = GTA3HUD.VC.WEAPONS
+		GTA3HUD.VC.DrawWeapon(weapon, database:Get(database:FindWeaponIcon(weapon)), self:WeaponTypeColour(settings, database:FindWeaponType(weapon) or GTA3HUD.VC.GetWeaponType(weapon)), x - settings.weapon.x * scale, y + settings.weapon.y * scale, settings.weapon.colour, settings.weapon.ammoCol, settings.shadowPos, settings.shadowCol, scale, settings.outline)
+	end
 
 	-- wasted
 	if settings.wasted.visible and GTA3HUD.util.IsWasted() then
