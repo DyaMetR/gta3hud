@@ -1,3 +1,7 @@
+--[[------------------------------------------------------------------
+  Support for DarkRP.
+  https://steamcommunity.com/sharedfiles/filedetails/?id=248302805
+]]--------------------------------------------------------------------
 
 local HOOK = GTA3HUD.hookname .. '_darkrp'
 
