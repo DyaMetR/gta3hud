@@ -71,13 +71,14 @@ if SERVER then
     if victim:IsNPC() and pvp:GetBool() then return end
     if not KILL_PENALTY[victim:GetClass()] then return end
     hit[victim] = victim:Health()
+    print(victim, hit[victim])
   end)
 
   -- [[ Add up to one star if we hurt NPCs (without killing them) ]] --
   hook.Add('PostEntityTakeDamage', HOOK, function(victim, dmg, took)
     if not hit[victim] then return end
     local attacker = dmg:GetAttacker()
-    if not IsValid(victim) or not IsValid(attacker) then hit[victim] = nil end
+    if not IsValid(victim) or not IsValid(attacker) then hit[victim] = nil return end
     local damage = math.min(hit[victim] - victim:Health(), math.max(victim:Health(), 0)) -- find the real damage done to this entity
 
     -- by default, doing damage without killing will only raise up to one star
