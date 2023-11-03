@@ -65,11 +65,11 @@ concommand.Add('gta3hud_menu', function()
             if preset and preset.engine then Derma_Message('#gta3hud.menu.save_as.duplicate_error', '#gta3hud.menu.menubar.file.save_as') return end
             if preset or GTA3HUD.settings.PresetFileExists(string.lower(value)) then
               Derma_Query('#gta3hud.menu.save_as.duplicate', '#gta3hud.menu.menubar.file.save_as', '#gta3hud.menu.save_as.yes', function()
-                GTA3HUD.settings.SaveAs(value, cache)
+                GTA3HUD.settings.SaveAs(value,  { name = cache.name, properties = GTA3HUD.settings.Copy(cache.properties) })
                 frame:LoadPresets()
               end, '#gta3hud.menu.save_as.no')
             else
-              GTA3HUD.settings.SaveAs(value, cache)
+              GTA3HUD.settings.SaveAs(value, { name = cache.name, properties = GTA3HUD.settings.Copy(cache.properties) })
               if GTA3HUD.toolmenu.list then GTA3HUD.toolmenu.list:AddLine(value) end
               frame:LoadPresets()
             end

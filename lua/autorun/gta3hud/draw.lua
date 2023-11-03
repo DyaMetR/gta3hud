@@ -194,8 +194,8 @@ function CURSOR:Add(name, w, h, x, y, ignore, skip)
   y = y or 0
   skip = skip or 0
   self.atlas:Add(name, self.x + x, self.y + y, w or self.w, h or self.h)
-  if ignore then self:Skip(w + skip, h + skip) return end
-  self:Skip((self.w or w) + skip, (self.h or h) + skip)
+  if ignore then self:Skip(w + skip, h) return end
+  self:Skip((self.w or w) + skip, self.h or h)
 end
 
 --[[------------------------------------------------------------------

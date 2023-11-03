@@ -13,7 +13,7 @@ GTA3HUD.hookname			= 'gta3hud'
 if CLIENT then
   -- addon information
   GTA3HUD.name				= 'GTA 3D Universe HUD'
-  GTA3HUD.version		= '1.1.3'
+  GTA3HUD.version		= '1.1.4'
   GTA3HUD.date				= 'November 3rd, 2023'
   GTA3HUD.credits		= { -- {name, contribution}
     {'DyaMetR', '#gta3hud.credits.author'},
