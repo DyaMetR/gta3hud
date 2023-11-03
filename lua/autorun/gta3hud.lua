@@ -1,6 +1,6 @@
 --[[------------------------------------------------------------------
   Grand Theft Auto 3D Universe HUD
-  November 2nd, 2023
+  November 3rd, 2023
   Made by DyaMetR
   * full credits found in the details below
 ]]--------------------------------------------------------------------
@@ -13,8 +13,8 @@ GTA3HUD.hookname			= 'gta3hud'
 if CLIENT then
   -- addon information
   GTA3HUD.name				= 'GTA 3D Universe HUD'
-  GTA3HUD.version		= '1.1'
-  GTA3HUD.date				= 'November 2nd, 2023'
+  GTA3HUD.version		= '1.1.1'
+  GTA3HUD.date				= 'November 3rd, 2023'
   GTA3HUD.credits		= { -- {name, contribution}
     {'DyaMetR', '#gta3hud.credits.author'},
     {'Rockstar Games', '#gta3hud.credits.rockstar'},

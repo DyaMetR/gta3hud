@@ -159,7 +159,7 @@ GTA3HUD.VC.WEAPON_TOOL				= 9
 
 -- [[ Weapon icons ]] --
 local WEAPONS = GTA3HUD.weapons.Create()
-WEAPONS.database.types = { textures = {}, classes = {} }
+WEAPONS.database.types = { textures = {}, classes = {}, worldmodels = {} }
 
 --[[------------------------------------------------------------------
 	Assigns a category to a weapon icon.
@@ -177,6 +177,15 @@ end
 ]]--------------------------------------------------------------------
 function WEAPONS:SetClassType(class, category)
   self.database.types.classes[class] = category
+end
+
+--[[------------------------------------------------------------------
+	Assigns a category to a world model.
+  @param {string} world model
+  @param {WEAPON_} weapon category
+]]--------------------------------------------------------------------
+function WEAPONS:SetWorldModelType(worldmodel, category)
+  self.database.types.worldmodels[worldmodel] = category
 end
 
 --[[------------------------------------------------------------------
@@ -205,6 +214,8 @@ function WEAPONS:FindWeaponType(weapon)
   if IsValid(weapon) then classname = weapon:GetClass() end
   local class = self.database.types.classes[classname]
   if class then return class end
+  local worldmodel = self.database.types.worldmodels[weapon:GetModel()]
+  if worldmodel then return worldmodel end
   return self.database.types.textures[self:FindWeaponIcon(weapon)]
 end
 
@@ -369,7 +380,7 @@ WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_mp5.mdl', weapon_mp5)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_mp7.mdl', weapon_smg1)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_ump45.mdl', weapon_ump45)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_p90.mdl', weapon_p90)
-WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_bizon.mdl', weapon_bizon)
+WEAPONS:AddWorldModel('models/weapons/csgo/w_smg_bizon.mdl', weapon_ppbizon)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_rif_ak47.mdl', weapon_ak47)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_rif_galilar.mdl', weapon_galil)
 WEAPONS:AddWorldModel('models/weapons/csgo/w_rif_sg556.mdl', weapon_sg552)
@@ -412,7 +423,7 @@ WEAPONS:AddClass('arc9_go_r8', weapon_magnum)
 WEAPONS:AddClass('arc9_go_tec9', weapon_tec9)
 WEAPONS:AddClass('arc9_go_usp', weapon_usp_silenced)
 WEAPONS:AddClass('arc9_go_mp7', weapon_smg1)
-WEAPONS:AddClass('arc9_go_bizon', weapon_bizon)
+WEAPONS:AddClass('arc9_go_bizon', weapon_ppbizon)
 WEAPONS:AddClass('arc9_go_mag7', weapon_mag7)
 WEAPONS:AddClass('arc9_go_nova', weapon_nova)
 WEAPONS:AddClass('arc9_go_sawedoff', weapon_sawedoff)
