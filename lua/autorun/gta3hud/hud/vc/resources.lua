@@ -296,6 +296,9 @@ WEAPONS:AddClass('weapon_fists', weapon_fists)
 WEAPONS:AddClass('none', weapon_fists)
 WEAPONS:AddClass('climb_swep2', weapon_fists)
 
+-- Medkit colour
+WEAPONS:SetWorldModelType('models/weapons/w_medkit.mdl', GTA3HUD.VC.WEAPON_TOOL)
+
 -- Half-Life 2
 WEAPONS:AddWorldModel('models/weapons/w_physics.mdl', weapon_physcannon)
 WEAPONS:AddWorldModel('models/weapons/w_crowbar.mdl', weapon_crowbar)

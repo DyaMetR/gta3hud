@@ -4,12 +4,12 @@
 
 if engine.ActiveGamemode() ~= 'terrortown' then return end
 
-local HOOK = GTA3HUD.hookname .. '_ttt'
+local hookname = GTA3HUD.hookname .. '_ttt'
 
 if SERVER then
 
   -- [[ Disable wanted system entirely ]] --
-  hook.Add('GTA3HUD_OnWantedLevelSet', HOOK, function() return false end)
+  hook.Add('GTA3HUD_OnWantedLevelSet', hookname, function() return false end)
 
   return
 end
@@ -23,6 +23,11 @@ local ROLE_COLOURS = {
 
 local ROUND_STATE = { 'round_wait', 'round_prep', 'round_active', 'round_post' }
 
+-- [[ Assign the fist icon to 'Holstered' ]] --
+for _, weapons in pairs({ GTA3HUD.GTA3.WEAPONS, GTA3HUD.VC.WEAPONS, GTA3HUD.SA.WEAPONS }) do
+  weapons:AddClass('weapon_ttt_unarmed', 'fists')
+end
+
 -- [[ Returns the actual time of the round ]] --
 local function getTime()
   local endtime = math.max(GetGlobalFloat('ttt_round_end', 0) - CurTime(), 0)
@@ -31,19 +36,19 @@ local function getTime()
 end
 
 -- [[ Hide default HUD ]] --
-hook.Add('HUDShouldDraw', HOOK, function(element)
+hook.Add('HUDShouldDraw', hookname, function(element)
   if not GTA3HUD.Enabled() then return end
   if element == 'TTTInfoPanel' then return false end
 end)
 
 -- [[ Hide out HUD when spectating ]] --
-hook.Add('GTA3HUD_ShouldDraw', HOOK, function()
+hook.Add('GTA3HUD_ShouldDraw', hookname, function()
   if not LocalPlayer().Team then return end
   if LocalPlayer():Team() == TEAM_SPEC then return false end
 end)
 
 -- [[ Get time ]] --
-hook.Add('GTA3HUD_GetTime', HOOK, function()
+hook.Add('GTA3HUD_GetTime', hookname, function()
   if HasteMode() and GAMEMODE.round_state == ROUND_ACTIVE then
     local haste = math.max(GetGlobalFloat('ttt_haste_end', 0) - CurTime(), 0)
     local minutes = math.floor(haste / 60)
@@ -54,7 +59,7 @@ hook.Add('GTA3HUD_GetTime', HOOK, function()
 end)
 
 -- [[ Get money ]] --
-hook.Add('GTA3HUD_GetMoney', HOOK, function()
+hook.Add('GTA3HUD_GetMoney', hookname, function()
   return LocalPlayer():GetBaseKarma()
 end)
 
@@ -62,17 +67,16 @@ end)
 local role = GTA3HUD.stats.CreateTextStat(nil, 'unknown')
 local haste = GTA3HUD.stats.CreateTextStat(nil, '00:00')
 local HASTE_FORMAT = '%02d:%02d'
-hook.Add('GTA3HUD_GetStats', HOOK, function(stats)
-  if not LANG then return end -- do nothing if not initialized
-  local langTable = LANG.GetUnsafeLanguageTable()
+hook.Add('GTA3HUD_GetStats', hookname, function(stats)
+  local tttlang = LANG.GetUnsafeLanguageTable()
 
   -- get role name
   local roundState = GAMEMODE.round_state
   local name = ''
   if roundState == ROUND_ACTIVE then
-    name = langTable[LocalPlayer():GetRoleStringRaw()]
+    name = tttlang[LocalPlayer():GetRoleStringRaw()]
   else
-    name = langTable[ROUND_STATE[roundState]]
+    name = tttlang[ROUND_STATE[roundState]]
   end
 
   -- get role colour
@@ -97,6 +101,6 @@ hook.Add('GTA3HUD_GetStats', HOOK, function(stats)
 end)
 
 -- [[ Show fellow traitors on the radar ]] --
-hook.Add('GTA3HUD_IsTeamMember', HOOK, function(_player)
+hook.Add('GTA3HUD_IsTeamMember', hookname, function(_player)
   return LocalPlayer():IsActiveTraitor() and _player:IsActiveTraitor()
 end)

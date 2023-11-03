@@ -116,8 +116,11 @@ if CLIENT then
 
 end
 
--- load third-party add-ons
-local files, directories = file.Find('autorun/gta3hud/add-ons/*.lua', 'LUA')
-for _, file in pairs(files) do
-  GTA3HUD.include('add-ons/' .. file)
-end
+-- [[ Load third party add-ons ]] --
+hook.Add('PostGamemodeLoaded', GTA3HUD.hookname, function()
+  local PATH_THIRDPARTY = 'autorun/gta3hud/add-ons/'
+  local files, directories = file.Find(PATH_THIRDPARTY .. '*.lua', 'LUA')
+  for _, file in pairs(files) do
+    GTA3HUD.include(PATH_THIRDPARTY .. file)
+  end
+end)
