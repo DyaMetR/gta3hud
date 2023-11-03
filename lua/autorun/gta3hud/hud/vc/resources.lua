@@ -210,12 +210,24 @@ end
   @return {WEAPON_} weapon category
 ]]--------------------------------------------------------------------
 function WEAPONS:FindWeaponType(weapon)
-  local classname = NULL
-  if IsValid(weapon) then classname = weapon:GetClass() end
+  local classname, model = NULL
+
+  -- make sure it doesn't explode when an invalid weapon is passed
+  if IsValid(weapon) then
+    classname = weapon:GetClass()
+    model = weapon:GetModel()
+  end
+
+  -- is this weapon's class registered?
   local class = self.database.types.classes[classname]
   if class then return class end
-  local worldmodel = self.database.types.worldmodels[weapon:GetModel()]
-  if worldmodel then return worldmodel end
+
+  -- is this weapon's world model registered?
+  if model then
+    local worldmodel = self.database.types.worldmodels[model]
+    if worldmodel then return worldmodel end
+  end
+
   return self.database.types.textures[self:FindWeaponIcon(weapon)]
 end
 
