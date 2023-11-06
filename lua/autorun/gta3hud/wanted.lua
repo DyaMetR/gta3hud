@@ -13,48 +13,67 @@ if SERVER then
   local TIMER = HOOK .. '_%s'
 
   local PENALTY_DAMAGE_MULTIPLIER = 0.05
-  local PENALTY_MACHINE = 1
-  local PENALTY_HUMAN = 3
-  local PENALTY_AUTHORITY = 6
-  local PENALTY_PLAYER = 8
-  local PENALTY_VEHICLE = 40
-  local PENALTY_STRIDER = 60
-  local MAX_WANTED_LEVEL = 100
 
-  local KILL_PENALTY = { -- wanted level added when killing these
-    player = PENALTY_PLAYER,
-    npc_alyx = PENALTY_HUMAN,
-    npc_barney = PENALTY_HUMAN,
-    npc_breen = PENALTY_AUTHORITY,
-    npc_citizen = PENALTY_HUMAN,
-    npc_combine_camera = PENALTY_MACHINE,
-    npc_combine_s = PENALTY_AUTHORITY,
-    npc_combinedropship = PENALTY_VEHICLE,
-    npc_combinegunship = PENALTY_VEHICLE,
-    npc_cscanner = PENALTY_MACHINE,
-    npc_dog = PENALTY_HUMAN,
-    npc_eli = PENALTY_HUMAN,
-    npc_fisherman = PENALTY_HUMAN,
-    npc_gman = PENALTY_HUMAN,
-    npc_helicopter = PENALTY_VEHICLE,
-    npc_hunter = PENALTY_AUTHORITY * 2,
-    npc_kleiner = PENALTY_HUMAN,
-    npc_monk = PENALTY_HUMAN,
-    npc_mossman = PENALTY_HUMAN,
-    npc_metropolice = PENALTY_AUTHORITY,
-    npc_manhack = PENALTY_MACHINE,
-    npc_sniper = PENALTY_AUTHORITY,
-    npc_stalker = PENALTY_HUMAN,
-    npc_strider = PENALTY_STRIDER,
-    npc_turret_ceiling = PENALTY_MACHINE,
-    npc_turret_floor = PENALTY_MACHINE,
-    npc_turret_ground = PENALTY_MACHINE
+  -- maximum wanted level
+  GTA3HUD.wanted.MAX_LEVEL          = 100
+
+  -- penalty types
+  GTA3HUD.wanted.PENALTY_MACHINE    = 1
+  GTA3HUD.wanted.PENALTY_HUMAN      = 3
+  GTA3HUD.wanted.PENALTY_AUTHORITY  = 6
+  GTA3HUD.wanted.PENALTY_PLAYER     = 8
+  GTA3HUD.wanted.PENALTY_VEHICLE    = 40
+  GTA3HUD.wanted.PENALTY_STRIDER    = 60
+
+  -- wanted level added when killing these entities
+  local KILL_PENALTY = {
+    player = GTA3HUD.wanted.PENALTY_PLAYER,
+    npc_alyx = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_barney = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_breen = GTA3HUD.wanted.PENALTY_AUTHORITY,
+    npc_citizen = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_combine_camera = GTA3HUD.wanted.PENALTY_MACHINE,
+    npc_combine_s = GTA3HUD.wanted.PENALTY_AUTHORITY,
+    npc_combinedropship = GTA3HUD.wanted.PENALTY_VEHICLE,
+    npc_combinegunship = GTA3HUD.wanted.PENALTY_VEHICLE,
+    npc_cscanner = GTA3HUD.wanted.PENALTY_MACHINE,
+    npc_dog = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_eli = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_fisherman = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_gman = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_helicopter = GTA3HUD.wanted.PENALTY_VEHICLE,
+    npc_hunter = GTA3HUD.wanted.PENALTY_AUTHORITY * 2,
+    npc_kleiner = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_monk = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_mossman = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_metropolice = GTA3HUD.wanted.PENALTY_AUTHORITY,
+    npc_manhack = GTA3HUD.wanted.PENALTY_MACHINE,
+    npc_sniper = GTA3HUD.wanted.PENALTY_AUTHORITY,
+    npc_stalker = GTA3HUD.wanted.PENALTY_HUMAN,
+    npc_strider = GTA3HUD.wanted.PENALTY_STRIDER,
+    npc_turret_ceiling = GTA3HUD.wanted.PENALTY_MACHINE,
+    npc_turret_floor = GTA3HUD.wanted.PENALTY_MACHINE,
+    npc_turret_ground = GTA3HUD.wanted.PENALTY_MACHINE
   }
-  local DAMAGE_EXCEPTION = { -- damage required to apply wanted level
+
+  -- damage applied to these entities in order to get their wanted level penalty
+  local DAMAGE_EXCEPTION = {
     npc_helicopter = 600,
     npc_strider = 350,
     npc_combinegunship = 100
   }
+
+  --[[------------------------------------------------------------------
+    Fetches the penalty to apply for assaulting the given entity.
+    @param {Entity} victim
+    @return {number} penalty
+  ]]--------------------------------------------------------------------
+  local function fetchPenalty(victim)
+    local penalty = hook.Run('GTA3HUD_GetAttackWantedLevel', victim)
+    if penalty == false then return end
+    if not isnumber(penalty) then return KILL_PENALTY[victim:GetClass()] end
+    return penalty
+  end
 
   -- [[ Reset wanted level upon dying ]] --
   hook.Add('PlayerSpawn', HOOK, function(_player)
@@ -68,10 +87,9 @@ if SERVER then
     if not enabled:GetBool() then return end
     local attacker = info:GetAttacker()
     if not IsValid(victim) or not IsValid(attacker) or not attacker:IsPlayer() or attacker == victim then return end
+    if not victim:IsPlayer() and not victim:IsNPC() then return end
     if victim:IsNPC() and pvp:GetBool() then return end
-    if not KILL_PENALTY[victim:GetClass()] then return end
     hit[victim] = victim:Health()
-    print(victim, hit[victim])
   end)
 
   -- [[ Add up to one star if we hurt NPCs (without killing them) ]] --
@@ -79,19 +97,20 @@ if SERVER then
     if not hit[victim] then return end
     local attacker = dmg:GetAttacker()
     if not IsValid(victim) or not IsValid(attacker) then hit[victim] = nil return end
+
+    -- fetch penalty
+    local penalty = fetchPenalty(victim)
+    if not penalty then hit[victim] = nil return end
+
+    -- for exceptions, it will count the damage instead of the kill to apply the penalty
     local damage = math.min(hit[victim] - victim:Health(), math.max(victim:Health(), 0)) -- find the real damage done to this entity
-
-    -- by default, doing damage without killing will only raise up to one star
-    local penalty = math.min(KILL_PENALTY[victim:GetClass()] * PENALTY_DAMAGE_MULTIPLIER * damage, math.pow(10 / 6, 2))
-
-    -- but for exceptions, it will count the damage instead of the kill to apply the penalty
     if DAMAGE_EXCEPTION[victim:GetClass()] and took then
-      penalty = KILL_PENALTY[victim:GetClass()] * (damage / DAMAGE_EXCEPTION[victim:GetClass()])
-    else
-      if attacker:GetNW2Int(NWVAR_WANTED) >= 1 then return end
+      GTA3HUD.wanted.Add(attacker, penalty * (damage / DAMAGE_EXCEPTION[victim:GetClass()]))
+    else -- otherwise, only raise one star when assaulting without killing
+      if attacker:GetNW2Int(NWVAR_WANTED) >= 1 then hit[victim] = nil return end
+      GTA3HUD.wanted.Add(attacker, math.min(penalty * PENALTY_DAMAGE_MULTIPLIER * damage, math.pow(10 / 6, 2)))
     end
 
-    GTA3HUD.wanted.Add(attacker, penalty)
     hit[victim] = nil
   end)
 
@@ -105,16 +124,18 @@ if SERVER then
   hook.Add('OnNPCKilled', HOOK, function(npc, attacker)
     if not enabled:GetBool() or pvp:GetBool() then return end
     if not IsValid(attacker) or not attacker:IsPlayer() then return end
-    if not KILL_PENALTY[npc:GetClass()] or DAMAGE_EXCEPTION[npc:GetClass()] then return end
-    GTA3HUD.wanted.Add(attacker, KILL_PENALTY[npc:GetClass()])
+    local penalty = fetchPenalty(npc)
+    if not penalty or DAMAGE_EXCEPTION[npc:GetClass()] then return end
+    GTA3HUD.wanted.Add(attacker, penalty)
   end)
 
   -- [[ Add wanted level after killing a player ]] --
   hook.Add('PlayerDeath', HOOK, function(victim, _, attacker)
     if not enabled:GetBool() then return end
     if not IsValid(victim) or not IsValid(attacker) or attacker == victim then return end
-    if victim.gta3hud_wanted > 0 then return end -- allow killing wanted players
-    GTA3HUD.wanted.Add(attacker, KILL_PENALTY.player)
+    local penalty = fetchPenalty(victim)
+    if not penalty or victim.gta3hud_wanted > 0 then return end -- allow killing wanted players
+    GTA3HUD.wanted.Add(attacker, penalty)
   end)
 
   --[[------------------------------------------------------------------
@@ -132,8 +153,8 @@ if SERVER then
         if not override then return end
       end
     end
-    _player.gta3hud_wanted = math.Clamp(amount, 0, MAX_WANTED_LEVEL)
-    _player:SetNW2Int(NWVAR_WANTED, math.floor(6 * math.sqrt(_player.gta3hud_wanted / MAX_WANTED_LEVEL)))
+    _player.gta3hud_wanted = math.Clamp(amount, 0, GTA3HUD.wanted.MAX_LEVEL)
+    _player:SetNW2Int(NWVAR_WANTED, math.floor(6 * math.sqrt(_player.gta3hud_wanted / GTA3HUD.wanted.MAX_LEVEL)))
     if _player.gta3hud_wanted <= 0 then timer.Remove(string.format(TIMER, _player:EntIndex())) return end
     GTA3HUD.wanted.DelayExpiration(_player)
   end

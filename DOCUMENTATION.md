@@ -137,6 +137,20 @@ hook.Add('GTA3HUD_OnWantedLevelAdded', 'some_unique_name', function(ply, amount)
 end)
 ```
 
+### GetAttackWantedLevel
+
+`GTA3HUD_GetAttackWantedLevel(Entity victim)` `SERVER`
+
+Called when we want to know how much wanted level progress is added when attacking or killing this entity.
+
+```lua
+-- example: if we kill breen, we get maximum wanted level
+hook.Add('GTA3HUD_GetAttackWantedLevel', 'some_unique_name', function(victim)
+  if victim ~= 'npc_breen' then return end
+  return GTA3HUD.wanted.MAX_LEVEL
+end)
+```
+
 ## Adding weapon icons
 
 Every registered HUD has a `WEAPONS` property on their export table which can be used to add weapon icons.
