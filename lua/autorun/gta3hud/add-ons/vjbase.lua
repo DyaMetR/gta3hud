@@ -13,6 +13,8 @@ local varCCom = 'CLASS_COMBINE'
 -- [[ Look for the base of the NPC to apply an adequate penalty ]] --
 hook.Add('GTA3HUD_GetAttackWantedLevel', GTA3HUD.hookname .. '_vjbase', function(victim)
   if not victim.IsVJBaseSNPC or not victim.VJ_NPC_Class then return end
-  if table.HasValue(victim.VJ_NPC_Class, varCCom) then return GTA3HUD.wanted.PENALTY_AUTHORITY end
-  if table.HasValue(victim.JV_NPC_Class, varCPly) then return GTA3HUD.wanted.PENALTY_HUMAN end
+  for _, class in pairs(victim.VJ_NPC_Class) do
+    if class == varCCom then return GTA3HUD.wanted.PENALTY_AUTHORITY end
+    if class == varCPly then return GTA3HUD.wanted.PENALTY_HUMAN end
+  end
 end)
