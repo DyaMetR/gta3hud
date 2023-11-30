@@ -21,7 +21,7 @@ function GTA3HUD.ammo.Primary()
   if not IsValid(weapon) then return false end
 
   -- check whether it's a SWEP with a custom ammunition display
-  if weapon:IsScripted() then
+  if weapon:IsScripted() and weapon.CustomAmmoDisplay then
     local ammo = weapon:CustomAmmoDisplay()
     if ammo then
       local clip, reserve = ammo.PrimaryClip, ammo.PrimaryAmmo
