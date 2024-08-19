@@ -8,3 +8,8 @@ hook.Add('GTA3HUD_GetMoney', 'cstrikebuymenu', function()
   if money == -1 then return end
   return money
 end)
+
+hook.Add('CStrike_MoneyHUD', 'gta3hud', function()
+  if not GTA3HUD.Enabled() then return end
+  return true
+end)
